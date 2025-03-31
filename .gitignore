@@ -1,0 +1,34 @@
+# Node.js
+node_modules/
+dist/
+
+# Firebase
+.firebase/
+.firebaserc
+
+# VSCode
+.vscode/
+
+# macOS
+.DS_Store
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files (si decides usarlos más adelante)
+.env
+.env.local
+.env.development
+.env.production
+.env.*
+
+# Build output
+build/
+
+# Optional: carpeta "y" si es temporal o accidental
+y/
+
+.env
+.env.*
