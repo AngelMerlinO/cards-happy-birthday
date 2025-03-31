@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import pairImage from '../assets/pair.jpg'
 import polaroidImage from '../assets/pair.jpg'
@@ -59,11 +59,33 @@ export default function BirthdayCarousel() {
   const index = ((page % cardsData.length) + cardsData.length) % cardsData.length
   const card = cardsData[index]
 
+  const [audioStarted, setAudioStarted] = useState(false)
+  const audioRef = React.useRef(null)
+
+  useEffect(() => {
+    audioRef.current = new Audio('/music.mp3')
+    audioRef.current.volume = 0.7
+
+    audioRef.current.play().catch((err) => {
+      console.log("Autoplay bloqueado, espera clic del usuario 🎧", err)
+    })
+
+    return () => {
+      audioRef.current.pause()
+      audioRef.current.currentTime = 0
+    }
+  }, [])
+
   const paginate = (newDirection) => {
     setPage([page + newDirection, newDirection])
   }
 
   const handleClick = (e) => {
+    if (!audioStarted && audioRef.current) {
+      audioRef.current.play()
+      setAudioStarted(true)
+    }
+
     const { offsetWidth } = e.currentTarget
     const x = e.clientX
     if (x < offsetWidth / 2) paginate(-1)
